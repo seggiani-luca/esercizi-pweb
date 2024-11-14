@@ -1,0 +1,59 @@
+body {
+	display: grid;
+	grid-template-areas: "form date view";
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 5px;
+}
+
+.panel-form {
+	grid-area: form;
+	background-color: lightyellow;
+	padding: 10px;
+}
+
+p {
+	margin: 5px;
+}
+
+.input-field {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.input-field input {
+	width: 50%;
+}
+
+.panel-date {
+	grid-area: date;
+	background-color: lightblue;
+	padding: 10px;
+}
+
+.table-date {
+	width: 100%;
+	height: 100%;
+	border-spacing: 3px;
+}
+
+.date-table-element {
+	background-color: white;
+	border: solid 1px gray;
+	border-radius: 2px;
+	min-width: 20px;
+}
+
+.panel-view {
+	grid-area: view;
+	background-color: navajowhite;
+	padding: 10px;
+}
+
+.empty-text {
+	display: none;
+}
+
+.view-table {
+	display: none;
+}
