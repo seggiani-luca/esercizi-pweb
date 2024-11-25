@@ -1,0 +1,45 @@
+.prompt-view {
+	background-color: lightgray;
+	padding: 10px;
+	max-width: 500px;
+}
+
+.prompt-list p {
+	display: flex;
+	justify-content: space-between;
+}
+
+.spreadsheet-view {
+	background-color: salmon;
+	padding: 5px;
+}
+
+.bad-input {
+	background-color: orange;
+}
+
+.hide {
+	display: none;
+}
+
+.spreadsheet {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.spreadsheet td {
+	padding: 1px;
+}
+
+.spreadsheet td:first-child {
+	width: 20px;
+}
+
+.spreadsheet td input {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.spreadsheet td {
+	text-align: center;
+}
