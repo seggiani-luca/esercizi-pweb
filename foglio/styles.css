@@ -9,8 +9,13 @@
 	justify-content: space-between;
 }
 
-.spreadsheet-view {
+.spreadsheet-table {
 	background-color: salmon;
+	padding: 5px;
+}
+
+.formula-editor {
+	background-color: lightblue;
 	padding: 5px;
 }
 

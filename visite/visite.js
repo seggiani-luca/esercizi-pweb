@@ -5,25 +5,18 @@ function string_to_day(dayString) {
 	switch(dayString) {
 		case "Lun":
 			return 0;
-			break;
 		case "Mar":
 			return 1;
-			break;
 		case "Mer":
 			return 2;
-			break;
 		case "Gio":
 			return 3;
-			break;
 		case "Ven":
 			return 4;
-			break;
 		case "Sab":
 			return 5;
-			break;
 		case "Dom":
 			return 6;
-			break;
 	}
 }
 
@@ -49,15 +42,48 @@ function drawDateTable() {
 		row.appendChild(dayLabel);
 
 		for(let h = 8; h <= 19; h++) {
-			const hourData = dayData[h];
+			const hourData = dayData[h - 8];
 
 			const hourCell = document.createElement("td");
 			hourCell.addEventListener("click", function() {
-				readData(d, h);
+				readData(d, h - 8);
 			});
 
-			hourCell.classList.add("date-table-element");
+			if(hourData.length == 0) {
+				hourCell.classList.add("date-table-element");
+			} else if (hourData.length == 3) {
+				hourCell.classList.add("date-table-element-full");
+			} else {
+				hourCell.classList.add("date-table-element-nonempty");
+			}
+
 			row.appendChild(hourCell);
+		}
+	}
+}
+
+function drawViewTable(hourData) {
+	viewTable = document.querySelector(".table-view");
+	viewTable.innerHTML = "";
+	
+	const firstRow = viewTable.insertRow();
+	let viewTableHeader = ["N.", "Nome", "Cognome"];
+	for(col of viewTableHeader) {
+		let colHeader = document.createElement("th");
+		colHeader.appendChild(document.createTextNode(col));
+		firstRow.appendChild(colHeader);
+	}
+
+	for(let i = 0; i < hourData.length; i++) {
+		let visit = hourData[i];
+		const row = viewTable.insertRow();
+		let firstCell = document.createElement("td");
+		firstCell.appendChild(document.createTextNode(i + 1));
+		row.appendChild(firstCell);
+		for(col of visit) {
+			let cell = document.createElement("td");
+			cell.appendChild(document.createTextNode(col));
+			row.appendChild(cell);
 		}
 	}
 }
@@ -70,7 +96,8 @@ function readData(d, h) {
 		document.querySelector(".table-view").style.display = "none";
 	} else {
 		document.querySelector(".empty-text").style.display = "none";
-		document.querySelector(".table-view").style.display = "block";
+		document.querySelector(".table-view").style.display = "table";
+		drawViewTable(thisData);
 	}
 }
 
@@ -82,26 +109,26 @@ function insertData() {
 
 	// convalida
 	
-	let d = string_to_day(day);
-	let h = hourInput;
+	let d = string_to_day(dayInput);
+	let h = hourInput - 8;
 
-	let visit = {
-		name: nameInput,
-		surname: surnameInput,
-		day: dayInput,
-		hour: hourInput
-	};
+	if(data[d][h].length == 3) {
+		alert(dayInput + " ore " + hourInput + " è completamente occupato.");
+		return;
+	}
+
+	let visit = [nameInput, surnameInput];
 	
 	data[d][h].push(visit);
 	drawDateTable();
 }
 
 function initData() {
-	data = Array();
+	data = [];
 	for(day of days) {
-		let dayData = Array();
+		let dayData = [];
 		for(let h = 8; h <= 19; h++) {
-			let hourData = Array();
+			let hourData = [];
 			dayData.push(hourData);
 		}
 		data.push(dayData);
