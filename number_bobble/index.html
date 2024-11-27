@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Number Bobble</Title>
+		<meta charset="utf-8"/>
+		<style>
+			body {
+				display: flex;
+				font-family: Arial, Helvetica, sans-serif;
+			}
+
+			main, aside {
+				margin: 10px;
+			}
+
+			table {
+				border-collapse: collapse;
+				margin-bottom: 20px;
+				border: solid 2px black;
+			}
+
+			th {
+				background-color: salmon;
+			}
+
+			th, td {
+				border: 1px solid darkslategray;
+				width: 30px;
+				height: 30px;
+			}
+		</style>
+		<script>
+			const ROWS = 4;
+			const COLUMN_KEYS = ["A", "S", "D", "F", "G", "H", "J", "K"];
+
+			function randomDigit() {
+				return Math.floor(Math.random() * 10);
+			}
+
+			var gameState = false;
+			var numberTable = []; // array di colonne
+
+			function initNumberTable() {
+				numberTable = [];
+				for(let i = 0; i < COLUMN_KEYS.length; i++) {
+					numberTable.push([]);
+				}
+			}
+
+			var nextNumber;
+			var nextColumn = 0;
+
+			var score = 0;
+
+			var gameTable;
+			var startButton;
+			var statusText;
+			var nextText;
+
+			var timer;
+
+			function init() {
+				gameTable = document.querySelector(".game-table");
+				startButton = document.querySelector(".start-button");
+				statusText = document.querySelector(".status-text");
+				nextText = document.querySelector(".next-text");
+
+				startButton.addEventListener("click", startGame);
+
+				initNumberTable();
+				draw();
+			}
+
+			function handleKeyDown(event) {
+				if(!gameState) return;
+				newColumn = COLUMN_KEYS.indexOf(event.key.toUpperCase());
+				if(newColumn != -1) nextColumn = newColumn;
+
+				draw();
+			}
+
+			function startGame() {
+				initNumberTable();	
+				nextNumber = randomDigit();
+				score = 0;
+
+				gameState = true;
+				startButton.setAttribute("disabled", "disabled")
+				statusText.textContent = "";
+				draw();
+
+				timer = setInterval(() => {
+					let currentColumn = numberTable[nextColumn]; 
+					currentColumn.push(nextNumber);
+
+					if(currentColumn.length >= 2 							 &&
+						(currentColumn[currentColumn.length - 1] ==
+						 currentColumn[currentColumn.length - 2])) {	
+						currentColumn.splice(0, numberTable.length - 2);
+						score++;
+					}                 
+
+					if(numberTable[nextColumn].length == ROWS + 1) gameOver();
+					
+					nextNumber = randomDigit();
+
+					draw();
+				}, 1000);
+			}
+
+			function gameOver() {
+				gameState = false;
+				startButton.removeAttribute("disabled");
+				clearInterval(timer);
+				
+				statusText.textContent = "Fine della partita! Hai totalizzato " + score + (score == 1 ? " punto" : " punti");
+				nextText.textContent = "";
+			}
+
+			function draw() {
+				if(nextNumber != undefined) nextText.textContent = "Prossimo numero: " + nextNumber;
+
+				gameTable.innerHTML = "";
+
+				let headRow = gameTable.insertRow();
+				for(let c = 0; c < COLUMN_KEYS.length; c++) {
+					let headCell = document.createElement("th");
+					headCell.textContent = COLUMN_KEYS[c]
+					headRow.appendChild(headCell);
+				}
+
+				for(let r = 0; r < ROWS; r++) {
+					let row = gameTable.insertRow();
+					for(let c = 0; c < COLUMN_KEYS.length; c++) {
+						let cell = document.createElement("td");
+						
+						let number = numberTable[c][ROWS - 1 - r];
+						if(number != undefined) cell.textContent = number;
+
+						if(c == nextColumn) cell.setAttribute("style", "background-color: lightblue;");
+
+						row.appendChild(cell);
+					}
+				}
+			}
+
+			document.addEventListener("DOMContentLoaded", init);
+			document.addEventListener("keydown", handleKeyDown);
+		</script>
+	</head>
+	<body>
+		<main>
+			<table class="game-table"></table>
+			<input class="start-button" type="button" value="Avvia"/>
+			<p class="status-text"></p>
+		</main>
+		<aside>
+			<p class="next-text"></p>
+		</aside>
+	</body>
+</html>
