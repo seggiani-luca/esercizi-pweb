@@ -87,8 +87,9 @@ function nextGameStep() {
 		gameState = false;
 
 		statusText.textContent = "Hai vinto in " + tryCount
-														 + (tryCount == 1 ? " tentativo" : " tentativo"); 
+														 + (tryCount == 1 ? " tentativo" : " tentativi"); 
 		startButton.removeAttribute("disabled");
+		clearInterval(timer);
 		return;
 	}
 
@@ -105,7 +106,7 @@ function nextGameStep() {
 			let index = needed_colors.indexOf(userSeq[i]);
 			if(index != -1) {
 				half_corrects++;
-				needed_colors.splice(i, 1);
+				needed_colors.splice(index, 1);
 			}
 		}
 	}
