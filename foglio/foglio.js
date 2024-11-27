@@ -1,7 +1,7 @@
 const max_row = 26;
 const max_col = 9;
 
-const func_regexp = /^[A-Z]\(([A-Z]|[1-9])\)$/;
+const func_regexp = /^[A-Z]\(([A-Z]|[1-9]+)\)$/;
 
 let cur_row = 0;
 let cur_col = 0;
@@ -169,14 +169,14 @@ function getFunction(string, thisr, thisc) {
 		range_type = "col";
 		if(range_num < 0 || range_num >= get_cols()) {
 			alert("La colonna indicata è inesistente");
-			return;
+			return new EmptyCell;
 		}
 	} else {
 		range_num = range_char.charCodeAt(0) - 65;
 		range_type = "row";
 		if(range_num < 0 || range_num >= get_rows()) {
 			alert("La riga indicata è inesistente");
-			return;
+			return new EmptyCell;
 		}
 	}
 
