@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>GANTT</title>
+		<style>
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				display: grid;
+				grid-template-areas: "aside main";
+			}
+			aside, main {
+				margin: 5px;
+			}
+			aside {
+				grid-area: aside;
+			}
+			main {
+				grid-area: main;
+			}
+			.insert-box {
+				background-color: lightgray;
+				padding: 10px;
+			}
+			.insert-box p {
+				display: flex;
+				flex-direction: column;
+				margin: 0;
+				margin-bottom: 10px;
+			}
+			table {
+				border-collapse: collapse;
+			}
+			td, th {
+				width: 70px;
+				height: 20px;
+			}
+			th {
+				background-color: lightyellow;
+			}
+			td {
+				border: dashed 1px black;
+			}
+			.activity-label {
+				background-color: lightblue;
+				border: solid 1px black;
+				text-align: right;
+			}
+			.activity-cell {
+				background-color: lightgreen;
+			}
+			.desc-box {
+				position: absolute;
+				background-color: lightcoral;
+				border: solid 1px black;
+				padding: 10px;
+			}	
+		</style>
+		<script src="gantt.js">
+		</script>
+	</head>
+	<body>
+		<aside>
+			<div class="insert-box">
+				<p>
+					<label>Identificatore</label>
+					<input type="text" class="ident-input">
+				</p>
+				<p>
+					<label>Descrizione</label>
+					<input type="text" class="desc-input">
+				</p>
+				<p>
+					<label>Inizio</label>
+					<input type="number" class="start-input">
+				</p>
+				<p>
+					<label>Fine</label>
+					<input type="number" class="end-input">
+				</p>
+				<input type="button" class="insert-button" value="Inserisci"/>
+			</div>
+		</aside>
+		<main>
+			<table class="gantt-table">
+			</table>
+		</main>
+		<div class="desc-box" style="display: none;">
+			<p></p>
+			<input type="button" class="close-button" value="Chiudi"/>
+		</div>
+	</body>
+</html>
