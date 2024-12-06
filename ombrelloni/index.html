@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Prenotazione Ombrelloni</title>
+		<meta charset="utf-8"/>
+		<style>
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				grid-template-areas: "insert  select"
+														 "reserve reserve";
+				grid-template-columns: 1fr 1fr;
+				display: grid;
+			}
+			.insert-box, .select-box, .reservation-box {
+				padding: 10px;
+			}
+			.insert-box {
+				grid-area: insert;
+				background-color: lightcyan;
+			}
+			.insert-box p {
+				display: flex;
+				justify-content: space-between;
+			
+			}
+			.insert-box p input {
+				width: calc(50% - 10px);
+			}
+			.insert-box input {
+				width: calc(50% - 10px);
+			}
+			.invalid {
+				background-color: lightcoral;
+			}
+			.select-box {
+				grid-area: select;
+				background-color: lightsalmon;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.select-table {
+				font-size: 2em;
+				cursor: pointer;
+			}
+			.reservation-box {
+				grid-area: reserve;
+				background-color: lightyellow;
+			}
+			h3 {
+				margin: 0;
+			}
+		</style>
+		<script src="ombrelloni.js">
+		</script>
+	</head>
+	<body>
+		<section class="insert-box">
+			<p>
+				<label>Data</label>
+				<input type="date" class="date-input"/>
+			</p>
+			<p>
+				<label>Nome</label>
+				<input type="text" class="name-input"/>
+			</p>
+			<p>
+				<label>Cognome</label>
+				<input type="text" class="surname-input"/>
+			</p>
+			<input type="button" class="select-button" value="Scegli"/>
+		</section>
+		<section class="select-box">
+			<table class="select-table">
+			</table>
+		</section>
+		<section class="reservation-box">
+			<h3>Prenotazioni</h3>
+			<p class="reservation-list">
+			</p>
+		</section>
+	</body>
+</html>
